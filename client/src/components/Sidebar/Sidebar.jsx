@@ -19,7 +19,7 @@ export default function Sidebar() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-gray-950 transition-opacity bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">
@@ -35,7 +35,7 @@ export default function Sidebar() {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                  <div className="flex h-full flex-col overflow-y-scroll bg-gradient-to-br from-sky-800 to-sky-950 py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
@@ -44,7 +44,7 @@ export default function Sidebar() {
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="relative rounded-md bg-gray-100 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2"
                             onClick={() => setOpen(false)}
                           >
                             <span className="absolute -inset-2.5" />

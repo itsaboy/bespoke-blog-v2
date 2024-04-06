@@ -1,21 +1,21 @@
 import {
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
+  ChatBubbleBottomCenterTextIcon,
+  DocumentTextIcon,
   HomeIcon,
-  UsersIcon,
+  PhotoIcon,
+  TrashIcon,
+  PencilSquareIcon,
+  InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 
 export const navLinks = [
-  { name: "Home", path: "/", icon: HomeIcon, current: true },
-  { name: "About", path: "/about", icon: UsersIcon, current: false },
-  { name: "Gallery", path: "/gallery", icon: FolderIcon, current: false },
-  { name: "Blog", path: "/blog", icon: CalendarIcon, current: false },
+  { name: "Home", path: "/", icon: HomeIcon },
+  { name: "About", path: "/about", icon: InformationCircleIcon },
+  { name: "Gallery", path: "/gallery", icon: PhotoIcon },
+  { name: "Blog", path: "/blog", icon: PencilSquareIcon },
   {
     name: "Contact",
     path: "/contact",
-    icon: DocumentDuplicateIcon,
-    current: false,
+    icon: ChatBubbleBottomCenterTextIcon,
   },
 ];
