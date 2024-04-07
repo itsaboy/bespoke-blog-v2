@@ -12,7 +12,7 @@ export default function Input({
     <div>
       <label
         htmlFor={htmlFor}
-        className="block text-sm font-medium leading-6 text-sky-400"
+        className="block text-sm font-medium leading-6 text-gray-400"
       >
         {label}
       </label>

@@ -1,7 +1,15 @@
+import { useEffect, useContext } from "react";
 import AboutContent from "../components/About/AboutContent";
 import AboutPicContainer from "../components/About/AboutPicContainer";
+import { AppContext } from "../context/AppContext";
 
 export default function About() {
+  const { currentPage, setCurrentPage } = useContext(AppContext);
+
+  useEffect(() => {
+    setCurrentPage("About");
+  }, [currentPage]);
+
   return (
     <div className="overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">

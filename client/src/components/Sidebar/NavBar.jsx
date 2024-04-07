@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserIcon, UserMinusIcon } from "@heroicons/react/24/outline";
+import { UserIcon, UserMinusIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import { navLinks } from "../../data/navLinks";
 import { AppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLogout } from "../../hooks/useLogout";
 
 export default function NavBar() {
-  const { active, setActive } = useContext(AppContext);
+  const { currentPage } = useContext(AppContext);
+  const { open, setOpen } = useContext(AppContext);
   const { user } = useAuthContext();
   const { logout } = useLogout();
 
@@ -25,15 +26,15 @@ export default function NavBar() {
               <Link
                 to={link.path}
                 className={`group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ${
-                  active === link.name
+                  currentPage === link.name
                     ? "bg-gray-200 text-gray-900"
                     : "text-gray-300 hover:text-sky-800 hover:bg-gray-200"
                 }`}
-                onClick={() => setActive(link.name)}
+                onClick={() => setOpen(false)}
               >
                 <link.icon
                   className={`h-6 w-6 shrink-0 ${
-                    active === link.name
+                    currentPage === link.name
                       ? "text-gray-900"
                       : "text-gray-300 group-hover:text-sky-800"
                   }`}
@@ -49,15 +50,15 @@ export default function NavBar() {
             <Link
               to="/login"
               className={`group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ${
-                active === "Login"
+                currentPage === "Login"
                   ? "bg-gray-200 text-gray-900"
                   : "text-gray-300 hover:text-sky-800 hover:bg-gray-200"
               }`}
-              onClick={() => setActive("Login")}
+              onClick={() => setOpen(false)}
             >
               <UserIcon
                 className={`h-6 w-6 shrink-0 ${
-                  active === "Login"
+                  currentPage === "Login"
                     ? "text-gray-900"
                     : "text-gray-300 group-hover:text-sky-800"
                 }`}
@@ -70,19 +71,19 @@ export default function NavBar() {
               <Link
                 to="/dashboard"
                 className={`group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ${
-                  active === "Login"
+                  currentPage === "Dashboard"
                     ? "bg-gray-200 text-gray-900"
                     : "text-gray-300 hover:text-sky-800 hover:bg-gray-200"
                 }`}
-                onClick={() => setActive("Dashboard")}
               >
-                <UserIcon
+                <ViewColumnsIcon
                   className={`h-6 w-6 shrink-0 ${
-                    active === "Dashboard"
+                    currentPage === "Dashboard"
                       ? "text-gray-900"
                       : "text-gray-300 group-hover:text-sky-800"
                   }`}
                   aria-hidden="true"
+                  onClick={() => setOpen(false)}
                 />
                 Dashboard
               </Link>

@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import { useLogin } from "../hooks/useLogin.js";
+import { AppContext } from "../context/AppContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { currentPage, setCurrentPage } = useContext(AppContext);
+
   const { login, loginError, setLoginError, loginLoading } = useLogin();
+
+  useEffect(() => {
+    setCurrentPage("Login");
+  }, [currentPage]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +35,7 @@ export default function Login() {
                 Not a member?{" "}
                 <Link
                   to="/signup"
-                  className="font-semibold text-gray-400 hover:text-sky-300"
+                  className="font-semibold text-sky-400 hover:text-sky-600"
                 >
                   Sign up!
                 </Link>
