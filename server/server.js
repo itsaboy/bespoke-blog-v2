@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "./server/.env" });
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 import mongoose from "mongoose";

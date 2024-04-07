@@ -8,7 +8,7 @@ export default function MainLayout() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-800 to-gray-950">
       <Header />
-      <main className="bg-transparent relative isolate">
+      <main className="bg-transparent relative isolate pb-8">
         <PageBG />
         <Sidebar />
         <Outlet />

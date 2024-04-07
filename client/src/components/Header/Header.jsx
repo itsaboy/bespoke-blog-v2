@@ -3,7 +3,7 @@ import {BarsArrowDownIcon} from "@heroicons/react/24/outline"
 import { AppContext } from "../../context/AppContext";
 
 export default function Header() {
-  const { open, setOpen } = useContext(AppContext);
+  const { setOpen } = useContext(AppContext);
   return (
     <header className="p-8 bg-gradient-to-r from-sky-800 to-sky-950 border-b border-sky-800">
       <div className="mx-auto flex flex-row justify-between items-center">
