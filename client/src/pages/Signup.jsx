@@ -2,11 +2,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
+import { useSignup } from "../hooks/useSignup.js";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { signup, signupError, signupLoading } = useSignup();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signup(username, email, password);
+  };
 
   return (
     <div className="mx-auto max-w-7xl px-6 pb-32 pt-10 sm:pt-60 lg:px-8 lg:pt-32">
@@ -27,13 +35,9 @@ export default function Signup() {
                 </Link>
               </p>
             </div>
-
             <div className="mt-10">
               <div>
-                <form
-                  className="space-y-6"
-                  // onSubmit={handleSubmit}
-                >
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <Input
                     htmlFor={"username"}
                     label={"Username"}
@@ -51,8 +55,8 @@ export default function Signup() {
                     name={"email"}
                     type={"email"}
                     required={true}
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <Input
                     htmlFor={"password"}
@@ -65,7 +69,7 @@ export default function Signup() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <br />
-                  <SubmitButton text={"Login"} />
+                  <SubmitButton text={"Signup"} />
                 </form>
               </div>
             </div>
@@ -83,4 +87,3 @@ export default function Signup() {
     </div>
   );
 }
-

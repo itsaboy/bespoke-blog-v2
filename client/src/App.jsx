@@ -1,4 +1,3 @@
-import { useState, useContext } from "react";
 import {
   Route,
   createBrowserRouter,
@@ -15,6 +14,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import { AppContextProvider } from "./context/AppContext";
+import { AuthContextProvider } from "./context/AuthContext";
 import "./App.css";
 
 const router = createBrowserRouter(
@@ -35,9 +35,11 @@ const router = createBrowserRouter(
 function App() {
   return (
     <>
-      <AppContextProvider>
-        <RouterProvider router={router} />
-      </AppContextProvider>
+      <AuthContextProvider>
+        <AppContextProvider>
+          <RouterProvider router={router} />
+        </AppContextProvider>
+      </AuthContextProvider>
     </>
   );
 }

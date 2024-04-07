@@ -2,10 +2,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
+import { useLogin } from "../hooks/useLogin.js";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const { login, loginError, setLoginError, loginLoading } = useLogin();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(username, password);
+  };
 
   return (
     <div className="mx-auto max-w-7xl px-6 pb-32 pt-10 sm:pt-60 lg:px-8 lg:pt-32">
@@ -29,10 +37,7 @@ export default function Login() {
 
             <div className="mt-10">
               <div>
-                <form
-                  className="space-y-6"
-                  // onSubmit={handleSubmit}
-                >
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <Input
                     htmlFor={"username"}
                     label={"Username"}

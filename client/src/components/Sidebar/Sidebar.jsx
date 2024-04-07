@@ -3,9 +3,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import NavBar from "../Sidebar/NavBar";
 import { AppContext } from "../../context/AppContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Sidebar() {
   const { open, setOpen } = useContext(AppContext);
+  const { user } = useAuthContext();
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -38,8 +40,8 @@ export default function Sidebar() {
                   <div className="flex h-full flex-col overflow-y-scroll bg-gradient-to-br from-sky-800 to-sky-950 py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                          Panel title
+                        <Dialog.Title className="text-base font-semibold leading-6 text-gray-300">
+                          {!user ? "Guest" : user.user}
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button

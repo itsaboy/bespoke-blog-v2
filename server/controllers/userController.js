@@ -4,9 +4,10 @@ import { createAccessToken, createRefreshToken } from "../utils/createToken.js";
 import { User } from "../models/userModel.js";
 
 export const signupUser = async (c) => {
-  const { username, email, password } = c.req.json();
+  const { username, email, password, role } = await c.req.json();
 
   try {
+    const user = await User.signup(username, email, password, role);
     const accessToken = createAccessToken(user._id, user.role);
     const refreshToken = createRefreshToken(user._id, user.role);
     user.refreshToken = refreshToken;
@@ -24,8 +25,8 @@ export const signupUser = async (c) => {
       path: "/",
       maxAge: 604800, // 7 days
     });
-    const user = await User.signup(username, email, password);
-    return c.json({ user: username });
+    user.save();
+    return c.json({ user: user.username, role: user.role });
   } catch (error) {
     console.log(error);
     return c.json({ error: error.message }, 401);
@@ -33,11 +34,13 @@ export const signupUser = async (c) => {
 };
 
 export const loginUser = async (c) => {
-  const { username, password } = c.req.json();
+  const { username, password } = await c.req.json();
 
   try {
     const user = await User.login(username, password);
     const accessToken = createAccessToken(user._id, user.role);
+    const refreshToken = createRefreshToken(user._id, user.role);
+    user.refreshToken = refreshToken;
     setCookie(c, "accessToken", accessToken, {
       httpOnly: true,
       secure: true,
@@ -52,7 +55,7 @@ export const loginUser = async (c) => {
       path: "/",
       maxAge: 604800, // 7 days
     });
-    return c.json({ user: username });
+    return c.json({ user: user.username, role: user.role });
   } catch (error) {
     console.log(error);
     return c.json({ error: error.message }, 401);
@@ -75,7 +78,7 @@ export const logoutUser = async (c) => {
       path: "/",
       expires: new Date(0),
     });
-    return c.status(200).json({ message: "Logged out successfully" });
+    return c.json({ message: "Logged out successfully" });
   } catch (error) {
     console.log(error);
     return c.json({ error: error.message }, 401);
