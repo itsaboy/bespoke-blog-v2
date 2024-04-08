@@ -85,7 +85,7 @@ export default function EditAboutPage() {
                       className="mt-2 text-sm text-sky-200"
                       id="image-input-description"
                     >
-                      Recommended aspect ratio is 9:16
+                      Recommended aspect ratio is 4:3
                     </p>
                   </div>
                 </div>
