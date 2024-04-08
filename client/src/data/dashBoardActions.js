@@ -41,7 +41,7 @@ export const actions = [
     title: "Edit Home Page",
     description:
       "Refresh your home page to keep it lively and welcoming for new visitors.",
-    path: "#",
+    path: "/dashboard/edit-home-page",
     icon: HomeIcon,
     iconForeground: "text-blue-400/80",
     iconBackground: "bg-gray-800",
@@ -49,7 +49,7 @@ export const actions = [
   {
     title: "Edit About Page",
     description: "Update your story to connect personally with your audience.",
-    path: "#",
+    path: "/dashboard/edit-about-page",
     icon: InformationCircleIcon,
     iconForeground: "text-blue-400/80",
     iconBackground: "bg-gray-800",
@@ -58,7 +58,7 @@ export const actions = [
     title: "Edit Gallery Page",
     description:
       "Update the gallery page to reflect current themes or exhibitions.",
-    path: "#",
+    path: "/dashboard/edit-gallery-page",
     icon: PhotoIcon,
     iconForeground: "text-blue-400/80",
     iconBackground: "bg-gray-800",
@@ -66,7 +66,7 @@ export const actions = [
   {
     title: "Edit Blog Page",
     description: "Revitalize your blog page to enhance visitor engagement.",
-    path: "#",
+    path: "/dashboard/edit-blog-page",
     icon: DocumentTextIcon,
     iconForeground: "text-blue-400/80",
     iconBackground: "bg-gray-800",
@@ -75,7 +75,7 @@ export const actions = [
     title: "Delete a Gallery Post",
     description:
       "Tidy up your image feed by discarding outdated or less impactful visuals.",
-    path: "#",
+    path: "/dashboard/delete-gallery-post",
     icon: TrashIcon,
     iconForeground: "text-red-400/80",
     iconBackground: "bg-gray-800",
@@ -84,7 +84,7 @@ export const actions = [
     title: "Delete a Blog Post",
     description:
       "Clean up your blog by removing posts that are no longer relevant.",
-    path: "#",
+    path: "/dashboard/delete-blog-post",
     icon: TrashIcon,
     iconForeground: "text-red-400/80",
     iconBackground: "bg-gray-800",
@@ -93,7 +93,7 @@ export const actions = [
     title: "Delete Contact Info",
     description:
       "Remove outdated contact information to keep your site's details accurate.",
-    path: "#",
+    path: "/dashboard/delete-contact-info",
     icon: TrashIcon,
     iconForeground: "text-red-400/80",
     iconBackground: "bg-gray-800",

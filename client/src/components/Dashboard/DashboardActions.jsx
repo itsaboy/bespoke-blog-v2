@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { actions } from "../../data/dashBoardActions.jsx";
+import { actions } from "../../data/dashBoardActions.js";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -7,7 +7,7 @@ function classNames(...classes) {
 
 export default function DashboardActions() {
   return (
-    <div className="mx-auto divide-y divide-gray-400 overflow-hidden rounded-lg bg-gray-400 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
+    <div className="mx-auto divide-y divide-gray-400 overflow-hidden rounded-lg bg-gray-400 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0 shadow-neon shadow-sky-800/60">
       {actions.map((action, actionIdx) => (
         <div
           key={action.title}

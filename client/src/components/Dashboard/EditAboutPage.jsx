@@ -1,23 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import TitleInput from "../TitleInput";
 import BodyInput from "../BodyInput";
 
-export default function NewBlogPost() {
+export default function EditAboutPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [image, setImage] = useState("");
-  const [imagePreview, setImagePreview] = useState("");
+  const [subBody, setSubBody] = useState("");
+  const [images, setImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
 
   const handleFileChange = (event) => {
-    const files = event.target.files;
-    setImage(files);
+    const files = Array.from(event.target.files).slice(0, 5);
+    setImages(files);
 
-    const previewUrls = Array.from(files).map((file) =>
-      URL.createObjectURL(file)
-    );
-    setImagePreview(previewUrls);
+    const previewUrls = files.map((file) => URL.createObjectURL(file));
+    setImagePreviews(previewUrls);
   };
 
   return (
@@ -34,14 +33,19 @@ export default function NewBlogPost() {
                   <ArrowLeftIcon className="h-4 w-4 mr-1" /> Back to Dashboard
                 </Link>
                 <h3 className="mt-10 text-2xl leading-6 text-sky-300">
-                  Create a new blog post
+                  Edit about page
                 </h3>
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <TitleInput title={title} setTitle={setTitle} />
                   <BodyInput
                     body={body}
                     setBody={setBody}
-                    toolTip={"Text will be formatted as written"}
+                    toolTip={"Keep to one paragraph"}
+                  />
+                  <BodyInput
+                    body={subBody}
+                    setBody={setSubBody}
+                    toolTip={"Keep to one paragraph"}
                   />
                   <div className="col-span-full">
                     <label
@@ -50,9 +54,9 @@ export default function NewBlogPost() {
                     >
                       Image
                     </label>
-                    {imagePreview.length > 0 ? (
+                    {imagePreviews.length > 0 ? (
                       <div className="flex justify-start">
-                        {imagePreview.map((previewUrl, index) => (
+                        {imagePreviews.map((previewUrl, index) => (
                           <img
                             key={index}
                             src={previewUrl}
@@ -73,7 +77,7 @@ export default function NewBlogPost() {
                         />
                         <PhotoIcon className="mx-auto h-12 w-12 text-gray-400" />
                         <span className="mt-2 block text-sm font-semibold text-gray-200">
-                          Upload Image
+                          Upload Images (max 4)
                         </span>
                       </div>
                     )}

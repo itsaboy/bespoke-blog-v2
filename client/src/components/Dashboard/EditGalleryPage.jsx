@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import TitleInput from "../TitleInput";
 import BodyInput from "../BodyInput";
 
-export default function NewBlogPost() {
+export default function EditGalleryPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [image, setImage] = useState("");
-  const [imagePreview, setImagePreview] = useState("");
+  const [image, setImage] = useState([]);
+  const [imagePreview, setImagePreview] = useState([]);
 
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -34,14 +34,14 @@ export default function NewBlogPost() {
                   <ArrowLeftIcon className="h-4 w-4 mr-1" /> Back to Dashboard
                 </Link>
                 <h3 className="mt-10 text-2xl leading-6 text-sky-300">
-                  Create a new blog post
+                  Edit gallery page
                 </h3>
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <TitleInput title={title} setTitle={setTitle} />
                   <BodyInput
                     body={body}
                     setBody={setBody}
-                    toolTip={"Text will be formatted as written"}
+                    toolTip={"Keep to one paragraph"}
                   />
                   <div className="col-span-full">
                     <label
@@ -81,7 +81,7 @@ export default function NewBlogPost() {
                       className="mt-2 text-sm text-sky-200"
                       id="image-input-description"
                     >
-                      Recommended aspect ratio is 9:16
+                      Recommended aspect ratio is 16:9
                     </p>
                   </div>
                 </div>

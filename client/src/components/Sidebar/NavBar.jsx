@@ -75,6 +75,7 @@ export default function NavBar() {
                     ? "bg-gray-200 text-gray-900"
                     : "text-gray-300 hover:text-sky-800 hover:bg-gray-200"
                 }`}
+                onClick={() => setOpen(false)}
               >
                 <ViewColumnsIcon
                   className={`h-6 w-6 shrink-0 ${
@@ -82,8 +83,7 @@ export default function NavBar() {
                       ? "text-gray-900"
                       : "text-gray-300 group-hover:text-sky-800"
                   }`}
-                  aria-hidden="true"
-                  onClick={() => setOpen(false)}
+                  aria-hidden="true"                  
                 />
                 Dashboard
               </Link>
