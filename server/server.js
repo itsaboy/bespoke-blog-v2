@@ -4,7 +4,10 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 import mongoose from "mongoose";
 import { userRoutes } from "./routes/userRoutes.js";
-import { homePageRoutes } from "./routes/homePage.js";
+import { homePageRoutes } from "./routes/homePageRoutes.js";
+import { aboutPageRoutes } from "./routes/aboutPageRoutes.js";
+import { galleryPageRoutes } from "./routes/galleryPageRoutes.js";
+import { blogPageRoutes } from "./routes/blogPageRoutes.js";
 
 async function startServer() {
   try {
@@ -18,6 +21,9 @@ async function startServer() {
 
     app.route("/api/user", userRoutes);
     app.route("/api/homePage", homePageRoutes);
+    app.route("/api/aboutPage", aboutPageRoutes);
+    app.route("/api/galleryPage", galleryPageRoutes);
+    app.route("/api/blogPage", blogPageRoutes);
 
     Bun.serve({
       fetch: app.fetch.bind(app),
@@ -31,8 +37,9 @@ async function startServer() {
       console.log("MongoDB connection closed.");
     };
 
-    process.on("SIGINT", shutdown);
-    process.on("SIGTERM", shutdown);
+    process.on("SIGINT", () => {
+      shutdown();
+    });
   } catch (error) {
     console.error("Failed to start the server:", error);
   }

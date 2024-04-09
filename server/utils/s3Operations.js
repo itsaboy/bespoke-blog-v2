@@ -12,10 +12,10 @@ export const s3Client = new S3Client({
   },
 });
 
-export const uploadImageToS3 = async (bucketName, file, postTitle) => {
+export const uploadImageToS3 = async (bucketName, file, postTitle, folder) => {
   const sanitizedTitle = postTitle.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
   const timestamp = Date.now();
-  const foldername = "HomePage";
+  const foldername = folder;
   const filename = file.name;
   const extension = mime.getExtension(file.type);
   const newFilename = `${filename

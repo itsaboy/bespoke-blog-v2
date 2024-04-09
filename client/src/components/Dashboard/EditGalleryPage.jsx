@@ -1,30 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import TitleInput from "../TitleInput";
 import BodyInput from "../BodyInput";
+import SubmitButton from "../SubmitButton";
+import Feedback from "../Feedback";
+import { useUploadGalleryPage } from "../../hooks/useGalleryPageUpload";
+import loadingIcon from "../../assets/icons/loadingIcon.svg";
 
 export default function EditGalleryPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [image, setImage] = useState([]);
-  const [imagePreview, setImagePreview] = useState([]);
+  const [images, setImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+
+  const {
+    uploadStatus,
+    uploadMessage,
+    uploadLoading,
+    setUploadMessage,
+    uploadGalleryPage,
+  } = useUploadGalleryPage();
+
+  useEffect(() => {
+    if (uploadStatus === "success") {
+      setTitle("");
+      setBody("");
+      setImages([]);
+      setImagePreviews([]);
+    }
+  }, [uploadStatus]);
 
   const handleFileChange = (event) => {
     const files = event.target.files;
-    setImage(files);
+    setImages(files);
 
     const previewUrls = Array.from(files).map((file) =>
       URL.createObjectURL(file)
     );
-    setImagePreview(previewUrls);
+    setImagePreviews(previewUrls);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    uploadGalleryPage(title, body, images);
   };
 
   return (
     <div className="overflow-hidden">
       <div className="mx-auto max-w-4xl px-6 pb-32 lg:px-8 pt-32">
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-none lg:flex-none lg:gap-y-8">
-          <form className="p-4 sm:p-16">
+          <form className="p-4 sm:p-16" onSubmit={handleSubmit}>
             <div className="space-y-12">
               <div className="pb-12">
                 <Link
@@ -50,9 +76,9 @@ export default function EditGalleryPage() {
                     >
                       Image
                     </label>
-                    {imagePreview.length > 0 ? (
+                    {imagePreviews.length > 0 ? (
                       <div className="flex justify-start">
-                        {imagePreview.map((previewUrl, index) => (
+                        {imagePreviews.map((previewUrl, index) => (
                           <img
                             key={index}
                             src={previewUrl}
@@ -78,33 +104,33 @@ export default function EditGalleryPage() {
                       </div>
                     )}
                     <p
-                      className="mt-2 text-sm text-sky-200"
+                      className="mt-4 mb-6 text-sm text-sky-200"
                       id="image-input-description"
                     >
                       Recommended aspect ratio is 16:9
                     </p>
+                    <div className="flex flex-col sm:flex-row justify-between">
+                      {!uploadLoading ? (
+                        <SubmitButton text={"Upload"} />
+                      ) : (
+                        <img
+                          src={loadingIcon}
+                          className="h-6 w-6"
+                          aria-hidden
+                        />
+                      )}
+                      {uploadMessage && (
+                        <Feedback
+                          color={uploadStatus === "success" ? "green" : "red"}
+                          msg={uploadMessage}
+                          setMsg={setUploadMessage}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            {/* <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-x-6">
-        {submissionLoading ? (
-          <p className="px-4 sm:px-10 py-2 bg-gradient-to-l from-rose-200 to-rose-400 border-2 border-rose-400 rounded-2xl shadow-neon shadow-rose-400/60 text-pink-800 animate-pulse">
-            <img className="h-6" src={loadingIcon} />
-          </p>
-        ) : (
-          <button
-            type="submit"
-            className="px-4 sm:px-10 py-2 bg-gradient-to-l from-rose-200 to-rose-400 border-2 border-rose-400 rounded-2xl shadow-neon shadow-rose-400/60 hover:bg-gradient-to-r hover:shadow-neon hover:shadow-rose-200/60 hover:border-rose-200 text-pink-800 mb-4 sm:mb-0"
-          >
-            Save
-          </button>
-        )}
-        {submissionMsg && (
-          <Feedback msg={submissionMsg} setMsg={setSubmissionMsg} />
-        )}
-      </div> */}
           </form>
         </div>
       </div>
