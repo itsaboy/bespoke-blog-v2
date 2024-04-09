@@ -1,10 +1,8 @@
-import placeholder from "../../assets/images/9x16-placeholder.png";
-
-export default function HomePic() {
+export default function HomePic({ src }) {
   return (
     <div className="relative hover:scale-105 ease-in-out duration-300 hover:-skew-y-2 hover:rotate-2 transform-gpu transition-transform rounded-xl shadow-neon shadow-sky-800/60">
       <img
-        src={placeholder}
+        src={src}
         alt=""
         className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
       />

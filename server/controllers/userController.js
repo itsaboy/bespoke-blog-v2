@@ -1,4 +1,4 @@
-import { setCookie, deleteCookie } from "hono/cookie";
+import { setCookie, deleteCookie, getCookie } from "hono/cookie";
 import jwt from "jsonwebtoken";
 import { createAccessToken, createRefreshToken } from "../utils/createToken.js";
 import { User } from "../models/userModel.js";
@@ -86,26 +86,27 @@ export const logoutUser = async (c) => {
 };
 
 export const refreshAccessToken = async (c) => {
-  const { refreshToken } = c.req.cookies;
+  const refreshToken = getCookie(c, "refreshToken");
   if (!refreshToken) {
     return c.json({ error: "No refresh token provided" }, 401);
   }
-  
+
   try {
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     const user = await User.findOne({ _id: decoded._id, role: decoded.role });
     if (!user || user.refreshToken !== refreshToken) {
       return c.json({ error: "Invalid refresh token" }, 401);
     }
-    const newAccessToken = createAccessToken(user._id, user.role);
-    setCookie(c, "accessToken", newAccessToken, {
+    const accessToken = createAccessToken(user._id, user.role);
+    setCookie(c, "accessToken", accessToken, {
       httpOnly: true,
       secure: true,
       sameSite: "Strict",
       path: "/",
       maxAge: 600, // 10 minutes
     });
-    return c.json({ success: true }, 200);
+
+    return c.json({ user: user.username, role: user.role });
   } catch (error) {
     console.log(error);
     return c.json({ error: error.message }, 401);

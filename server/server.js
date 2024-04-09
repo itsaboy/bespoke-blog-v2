@@ -8,6 +8,8 @@ import { homePageRoutes } from "./routes/homePageRoutes.js";
 import { aboutPageRoutes } from "./routes/aboutPageRoutes.js";
 import { galleryPageRoutes } from "./routes/galleryPageRoutes.js";
 import { blogPageRoutes } from "./routes/blogPageRoutes.js";
+import { galleryPostRoutes } from "./routes/galleryPostRoutes.js";
+import { blogPostRoutes } from "./routes/blogPostRoutes.js";
 
 async function startServer() {
   try {
@@ -24,6 +26,8 @@ async function startServer() {
     app.route("/api/aboutPage", aboutPageRoutes);
     app.route("/api/galleryPage", galleryPageRoutes);
     app.route("/api/blogPage", blogPageRoutes);
+    app.route("/api/galleryPost", galleryPostRoutes);
+    app.route("/api/blogPost", blogPostRoutes);
 
     Bun.serve({
       fetch: app.fetch.bind(app),

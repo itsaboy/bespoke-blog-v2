@@ -1,39 +1,24 @@
 import { useState, useCallback } from "react";
 import { fetchWithRetry } from "../utils/refresh";
 
-export const useUploadAboutPage = () => {
+export const useNewBlogPost = () => {
   const [uploadStatus, setUploadStatus] = useState("");
   const [uploadMessage, setUploadMessage] = useState(null);
   const [uploadLoading, setUploadLoading] = useState(false);
 
-  const uploadAboutPage = useCallback(async (title, body, subBody, images) => {
+  const uploadBlogPost = useCallback(async (title, body, image) => {
     setUploadStatus("");
     setUploadMessage(null);
     setUploadLoading(true);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
-    formData.append("subBody", subBody);
-    images.forEach((image) => {
-      formData.append("image", image);
-    });
+    for (let file of image) {
+      formData.append("image", file);
+    }
 
     try {
-      const checkResponse = await fetchWithRetry("/api/aboutPage/check", {
-        method: "GET",
-        credentials: "include",
-      });
-      if (checkResponse.ok) {
-        const { exists, id } = await checkResponse.json();
-        if (exists && id) {
-          await fetchWithRetry(`/api/aboutPage/delete/${id}`, {
-            method: "DELETE",
-            credentials: "include",
-          });
-        }
-      }
-
-      const response = await fetchWithRetry("/api/aboutPage/create", {
+      const response = await fetchWithRetry("/api/blogPost/create", {
         method: "POST",
         body: formData,
         credentials: "include",
@@ -57,6 +42,6 @@ export const useUploadAboutPage = () => {
     uploadMessage,
     uploadLoading,
     setUploadMessage,
-    uploadAboutPage,
+    uploadBlogPost,
   };
 };

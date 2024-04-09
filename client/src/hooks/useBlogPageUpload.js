@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { refreshAccessToken } from "../utils/refresh";
+import { fetchWithRetry } from "../utils/refresh";
 
 export const useUploadBlogPage = () => {
   const [uploadStatus, setUploadStatus] = useState("");
@@ -18,54 +18,34 @@ export const useUploadBlogPage = () => {
     }
 
     try {
-      const checkResponse = await fetch("/api/blogPage/check", {
+      const checkResponse = await fetchWithRetry("/api/blogPage/check", {
         method: "GET",
         credentials: "include",
       });
       if (checkResponse.ok) {
         const { exists, id } = await checkResponse.json();
         if (exists && id) {
-          await fetch(`/api/blogPage/delete/${id}`, {
+          await fetchWithRetry(`/api/blogPage/delete/${id}`, {
             method: "DELETE",
             credentials: "include",
           });
         }
       }
 
-      const response = await fetch("/api/blogPage/create", {
+      const response = await fetchWithRetry("/api/blogPage/create", {
         method: "POST",
         body: formData,
         credentials: "include",
       });
-      if (!response.ok) {
-        if (response.status === 401 || response.status === 403) {
-          throw new Error("Authentication required");
-        } else {
-          setUploadStatus("failure");
-          throw new Error("Upload failed");
-        }
-      }
+      if (!response.ok) throw new Error("Upload failed");
+
       const result = await response.json();
       setUploadMessage("Upload succeeded!");
       setUploadStatus("success");
     } catch (error) {
       console.error("Error during upload:", error);
-      if (error.message === "Authentication required") {
-        const refreshSuccess = await refreshAccessToken();
-        if (refreshSuccess) {
-          const retryResponse = await fetch("/api/blogPage/create", {
-            method: "POST",
-            body: formData,
-            credentials: "include",
-          });
-          if (!retryResponse.ok) throw new Error("Upload failed after retry");
-        } else {
-          setUploadMessage("Session expired. Please log in again.");
-        }
-      } else {
-        setUploadMessage("Upload failed!");
-        setUploadStatus("failure");
-      }
+      setUploadMessage(error.message);
+      setUploadStatus("failure");
     } finally {
       setUploadLoading(false);
     }
@@ -79,3 +59,4 @@ export const useUploadBlogPage = () => {
     uploadBlogPage,
   };
 };
+

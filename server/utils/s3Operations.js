@@ -40,7 +40,7 @@ export const uploadImageToS3 = async (bucketName, file, postTitle, folder) => {
     });
 
     const result = await uploader.done();
-    console.log("Upload successful:", result);
+    console.log("Upload successful:");
     return `https://${bucketName}.s3.${process.env.BUCKET_REGION}.amazonaws.com/${key}`;
   } catch (error) {
     console.error("Error uploading image to S3:", error);
