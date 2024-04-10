@@ -8,6 +8,8 @@ import { useDeleteGalleryPost } from "../../hooks/useDeleteGalleryPost";
 export default function DeleteGalleryPost() {
   const [imagePosts, setImagePosts] = useState([]);
 
+  const { loading, error, data, fetchGalleryPosts } = useFetchGalleryPosts();
+
   const {
     deleteStatus,
     deleteMessage,
@@ -17,110 +19,79 @@ export default function DeleteGalleryPost() {
   } = useDeleteGalleryPost();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const posts = await useFetchGalleryPosts();
-        setImagePosts(posts);
-      } catch (error) {
-        console.error("Failed to fetch gallery posts:", error);
-      }
-    };
-
-    fetchData();
-  }, [imagePosts]);
+    fetchGalleryPosts();
+  }, []);
 
   const handleDelete = async (postId, e) => {
     e.preventDefault();
     await deleteGalleryPost(postId);
-    await useFetchGalleryPosts();
+    await fetchGalleryPosts();
   };
 
   return (
     <div className="overflow-hidden">
-      <div className="mx-auto max-w-4xl px-6 pb-32 lg:px-8 pt-32">
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-none lg:flex-none lg:gap-y-8">
+      <div className="mx-auto max-w-6xl px-6 pb-32 lg:px-8 pt-32">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:min-w-full lg:max-w-none lg:flex-none lg:gap-y-8">
           <form className="p-4 sm:p-16">
             <div className="space-y-12">
               <div className="pb-12">
-                <Link
-                  to="/dashboard"
-                  className="flex items-center text-gray-400 hover:text-sky-400"
-                >
-                  <ArrowLeftIcon className="h-4 w-4 mr-1" /> Back to Dashboard
-                </Link>
-                <h3 className="mt-10 text-2xl leading-6 text-sky-300">
-                  Delete gallery post
-                </h3>
+                <div className="flex flex-col justify-center items-center">
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center text-gray-400 hover:text-sky-400"
+                  >
+                    <ArrowLeftIcon className="h-4 w-4 mr-1" /> Back to Dashboard
+                  </Link>
+                  <h3 className="mt-10 text-2xl leading-6 text-sky-300">
+                    Delete gallery post
+                  </h3>
+                </div>
                 <>
-                  {imagePosts.length > 0 && (
-                    <div className="mt-12">
-                      {imagePosts.map((post) => (
-                        <div key={post._id} className="">
-                          <div className="relative w-64 flex flex-col justify-center items-center p-2 ">
-                            <img
-                              src={post.imageUrls[0]}
-                              alt=""
-                              className="object-cover rounded-lg"
-                            />
-                            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity rounded-lg">
-                              <button
-                                className="hover:cursor-pointer"
-                                onClick={(e) => handleDelete(post._id, e)}
-                              >
-                                <TrashIcon
-                                  className="h-16 w-16 text-rose-300"
-                                  aria-hidden="true"
-                                />
-                              </button>
-                            </div>
-                            <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-pink-200">
-                              {post.title}
-                            </p>
-                            <p className="pointer-events-none block text-sm font-medium text-pink-300">
-                              {dayjs(post.createdAt).format("MMMM D, YYYY")}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                      {/* <ul
-                        role="list"
-                        className="p-4 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
-                      >
-                        {imagePosts.map((post) => (
-                          <li key={post._id} className="relative">
-                            <div className="group relative aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg border-gray-950 border-2 hover:border-pink-200">
+                  {data.length > 0 && (
+                    <>
+                      <div className="mx-auto mt-20 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                        {data.map((post) => (
+                          <div
+                            key={post._id}
+                            className="flex flex-col items-center"
+                          >
+                            <div className="relative w-64 h-96 flex items-center justify-center">
                               <img
                                 src={post.imageUrls[0]}
-                                alt=""
-                                className="object-cover group-hover:opacity-75"
+                                alt={post.title}
+                                className="object-cover h-full w-full rounded-t-lg"
                               />
-                              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 ease-in-out rounded-t-lg">
                                 <button
                                   className="hover:cursor-pointer"
                                   onClick={(e) => handleDelete(post._id, e)}
                                 >
                                   <TrashIcon
-                                    className="h-16 w-16 text-rose-300"
+                                    className="h-16 w-16 text-gray-400"
                                     aria-hidden="true"
                                   />
                                 </button>
                               </div>
                             </div>
-                            <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-pink-200">
-                              {post.title}
-                            </p>
-                            <p className="pointer-events-none block text-sm font-medium text-pink-300">
-                              {dayjs(post.createdAt).format("MMMM D, YYYY")}
-                            </p>
-                          </li>
+                            <div className="w-64 p-4 bg-gray-800 rounded-b-lg border-t border-gray-600">
+                              <p className="pointer-events-none truncate text-sm font-medium text-sky-200">
+                                {post.title}
+                              </p>
+                              <p className="pointer-events-none text-sm font-medium text-sky-400">
+                                {dayjs(post.createdAt).format("MMMM D, YYYY")}
+                              </p>
+                            </div>
+                          </div>
                         ))}
-                      </ul> */}
-                      <div className="mt-8 rounded-b-2xl border-t-2 border-t-rose-400 text-center bg-pink-200/80 p-2.5">
-                        <h4>Click a post to delete it</h4>
                       </div>
-                    </div>
+                      <div className="mt-8 text-center">
+                        <h4 className="text-sky-400">
+                          Click a post to delete it
+                        </h4>
+                      </div>
+                    </>
                   )}
-                  {imagePosts.length < 1 && (
+                  {data.length < 1 && (
                     <h3 className="pt-10 text-2xl text-pink-200">
                       There are no saved gallery posts!
                     </h3>
@@ -128,24 +99,6 @@ export default function DeleteGalleryPost() {
                 </>
               </div>
             </div>
-
-            {/* <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-x-6">
-        {submissionLoading ? (
-          <p className="px-4 sm:px-10 py-2 bg-gradient-to-l from-rose-200 to-rose-400 border-2 border-rose-400 rounded-2xl shadow-neon shadow-rose-400/60 text-pink-800 animate-pulse">
-            <img className="h-6" src={loadingIcon} />
-          </p>
-        ) : (
-          <button
-            type="submit"
-            className="px-4 sm:px-10 py-2 bg-gradient-to-l from-rose-200 to-rose-400 border-2 border-rose-400 rounded-2xl shadow-neon shadow-rose-400/60 hover:bg-gradient-to-r hover:shadow-neon hover:shadow-rose-200/60 hover:border-rose-200 text-pink-800 mb-4 sm:mb-0"
-          >
-            Save
-          </button>
-        )}
-        {submissionMsg && (
-          <Feedback msg={submissionMsg} setMsg={setSubmissionMsg} />
-        )}
-      </div> */}
           </form>
         </div>
       </div>

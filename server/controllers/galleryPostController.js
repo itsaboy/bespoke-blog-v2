@@ -53,7 +53,7 @@ export const getGalleryPost = async (c) => {
     return c.json(post);
   } catch (error) {
     console.error("Failed to retrieve the image post:", error);
-    res.status(500).json({ message: "Failed to retrieve the image post" });
+    return c.json({ message: "Failed to retrieve the image post" }, 500);
   }
 };
 

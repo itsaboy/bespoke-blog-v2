@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
 import SingleImage from "./SingleImage.jsx";
 import LoadingOverlay from "../LoadingOverlay.jsx";
 import { useFetchSingleGalleryPost } from "../../hooks/useFetchSingleGalleryPost.js";
 
-export default function Gallery() {
+export default function SingleGalleryPost() {
   const { postId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [imgPath, setImgPath] = useState(null);
@@ -28,9 +29,10 @@ export default function Gallery() {
           <h2 className="text-2xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-l from-pink-300 to-pink-500 sm:text-4xl z-10 py-8">
             {data.title}
           </h2>
-          <p className="text-sm sm:text-base leading-8 text-rose-300 sm:max-w-md lg:max-w-none">
+          <h3 className="text-base sm:text-2xl leading-8 text-rose-300 sm:max-w-md lg:max-w-none">
             {data.body}
-          </p>
+          </h3>
+          <p className="mt-8 text-sm sm:text-xl leading-8 text-rose-300 sm:max-w-md lg:max-w-none">{dayjs(data.createdAt).format("MMMM D, YYYY")}</p>
         </div>
         <div className="grid grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-16">
           {data.imageUrls &&

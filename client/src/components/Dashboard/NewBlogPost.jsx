@@ -50,7 +50,7 @@ export default function NewBlogPost() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    uploadBlogPost(title, location, image);
+    uploadBlogPost(title, body, image);
   };
 
   return (

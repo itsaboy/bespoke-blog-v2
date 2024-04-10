@@ -43,6 +43,20 @@ export const getBlogPosts = async (c) => {
   }
 };
 
+export const getBlogPost = async (c) => {
+  const postId = c.req.param("postId");
+  try {
+    const post = await BlogPost.findById(postId);
+    if (!post) {
+      return c.json({ message: "Blog post not found" }, 400);
+    }
+    return c.json(post);
+  } catch (error) {
+    console.error("Failed to retrieve the image post:", error);
+    return c.json({ message: "Failed to retrieve the image post" }, 500);
+  }
+};
+
 export const deleteBlogPost = async (c) => {
   const postId = c.req.param("postId");
 

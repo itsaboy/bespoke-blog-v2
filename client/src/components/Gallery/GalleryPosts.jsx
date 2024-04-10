@@ -25,10 +25,10 @@ export default function GalleryPosts() {
               <div className="absolute inset-0 bg-gradient-to-r from-sky-400 to-sky-600 rounded-xl transition-opacity duration-500 opacity-0 hover:opacity-20" />
             </Link>
           </div>
-          <h3 className="mt-4 text-lg font-semibold leading-6 text-red-400 hover:text-pink-400">
+          <h3 className="mt-4 text-lg font-semibold leading-6 text-gray-400 hover:text-sky-400">
             <Link to={`/gallery/${post._id}`}>{post.title}</Link>
           </h3>
-          <p className="mt-2 line-clamp-3 text-sm leading-6 text-pink-300">
+          <p className="mt-2 line-clamp-3 text-sm leading-6 text-sky-300">
             {dayjs(post.createdAt).format("MMMM D, YYYY")}
           </p>
         </div>
