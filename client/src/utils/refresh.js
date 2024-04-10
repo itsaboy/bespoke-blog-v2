@@ -16,7 +16,7 @@ export const refreshAccessToken = async () => {
 export const fetchWithRetry = async (url, options, retry = true) => {
   let response = await fetch(url, options);
 
-  if ((response.status === 401 || response.status === 403) && retry) {
+  if ((response.status === 401 || response.status === 403 || response.status === 500) && retry) {
     const refreshSuccess = await refreshAccessToken();
     if (refreshSuccess) {
       return fetchWithRetry(url, options, false);

@@ -6,9 +6,9 @@ import Footer from "../components/Footer/Footer";
 
 export default function MainLayout() {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-800 to-gray-950">
+    <div className="flex flex-col min-h-screen h-full bg-gradient-to-b from-gray-800 to-gray-950">
       <Header />
-      <main className="bg-transparent relative isolate pb-8">
+      <main className="flex-grow bg-transparent relative isolate pb-8">
         <PageBG />
         <Sidebar />
         <Outlet />

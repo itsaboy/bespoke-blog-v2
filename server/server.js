@@ -35,15 +35,6 @@ async function startServer() {
     });
     console.log(`Hono server running on port ${process.env.PORT}`);
 
-    const shutdown = async () => {
-      console.log("Server is shutting down...");
-      await mongoose.disconnect();
-      console.log("MongoDB connection closed.");
-    };
-
-    process.on("SIGINT", () => {
-      shutdown();
-    });
   } catch (error) {
     console.error("Failed to start the server:", error);
   }

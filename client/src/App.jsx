@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Gallery from "./pages/Gallery";
+import SingleGalleryPost from "./components/Gallery/SingleGalleryPost";
 import Blog from "./pages/Blog";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />,
       <Route path="/about" element={<About />} />,
       <Route path="/gallery" element={<Gallery />} />,
+      <Route path="/gallery/:postId" element={<SingleGalleryPost />} />,
       <Route path="/blog" element={<Blog />} />,
       <Route path="/contact" element={<Contact />} />,
       <Route path="/login" element={<Login />} />,

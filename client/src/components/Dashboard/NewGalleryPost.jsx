@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import TitleInput from "../TitleInput";
@@ -6,6 +6,7 @@ import LocationInput from "../LocationInput";
 import SubmitButton from "../SubmitButton";
 import Feedback from "../Feedback";
 import { useNewGalleryPost } from "../../hooks/useNewGalleryPost";
+import { AppContext } from "../../context/AppContext";
 import loadingIcon from "../../assets/icons/loadingIcon.svg";
 
 export default function NewGalleryPost() {
@@ -13,6 +14,12 @@ export default function NewGalleryPost() {
   const [location, setLocation] = useState("");
   const [images, setImages] = useState("");
   const [imagePreview, setImagePreviews] = useState("");
+
+  const { currentPage, setCurrentPage } = useContext(AppContext);
+
+  useEffect(() => {
+    setCurrentPage("Dashboard");
+  }, [currentPage]);
 
   const {
     uploadStatus,

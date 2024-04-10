@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import TitleInput from "../TitleInput";
@@ -6,6 +6,7 @@ import BodyInput from "../BodyInput";
 import SubmitButton from "../SubmitButton";
 import Feedback from "../Feedback";
 import { useNewBlogPost } from "../../hooks/useNewBlogPost";
+import { AppContext } from "../../context/AppContext";
 import loadingIcon from "../../assets/icons/loadingIcon.svg";
 
 export default function NewBlogPost() {
@@ -13,6 +14,12 @@ export default function NewBlogPost() {
   const [body, setBody] = useState("");
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
+
+  const { currentPage, setCurrentPage } = useContext(AppContext);
+
+  useEffect(() => {
+    setCurrentPage("Dashboard");
+  }, [currentPage]);
 
   const {
     uploadStatus,

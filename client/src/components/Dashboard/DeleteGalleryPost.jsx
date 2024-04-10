@@ -1,10 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { TrashIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { useFetchGalleryPosts } from "../../hooks/useFetchGalleryPosts";
+import { useDeleteGalleryPost } from "../../hooks/useDeleteGalleryPost";
 
 export default function DeleteGalleryPost() {
   const [imagePosts, setImagePosts] = useState([]);
+
+  const {
+    deleteStatus,
+    deleteMessage,
+    deleteLoading,
+    setDeleteMessage,
+    deleteGalleryPost,
+  } = useDeleteGalleryPost();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const posts = await useFetchGalleryPosts();
+        setImagePosts(posts);
+      } catch (error) {
+        console.error("Failed to fetch gallery posts:", error);
+      }
+    };
+
+    fetchData();
+  }, [imagePosts]);
+
+  const handleDelete = async (postId, e) => {
+    e.preventDefault();
+    await deleteGalleryPost(postId);
+    await useFetchGalleryPosts();
+  };
 
   return (
     <div className="overflow-hidden">
@@ -24,8 +53,36 @@ export default function DeleteGalleryPost() {
                 </h3>
                 <>
                   {imagePosts.length > 0 && (
-                    <>
-                      <ul
+                    <div className="mt-12">
+                      {imagePosts.map((post) => (
+                        <div key={post._id} className="">
+                          <div className="relative w-64 flex flex-col justify-center items-center p-2 ">
+                            <img
+                              src={post.imageUrls[0]}
+                              alt=""
+                              className="object-cover rounded-lg"
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity rounded-lg">
+                              <button
+                                className="hover:cursor-pointer"
+                                onClick={(e) => handleDelete(post._id, e)}
+                              >
+                                <TrashIcon
+                                  className="h-16 w-16 text-rose-300"
+                                  aria-hidden="true"
+                                />
+                              </button>
+                            </div>
+                            <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-pink-200">
+                              {post.title}
+                            </p>
+                            <p className="pointer-events-none block text-sm font-medium text-pink-300">
+                              {dayjs(post.createdAt).format("MMMM D, YYYY")}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                      {/* <ul
                         role="list"
                         className="p-4 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
                       >
@@ -40,7 +97,7 @@ export default function DeleteGalleryPost() {
                               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button
                                   className="hover:cursor-pointer"
-                                  // onClick={() => deletePost(post._id)}
+                                  onClick={(e) => handleDelete(post._id, e)}
                                 >
                                   <TrashIcon
                                     className="h-16 w-16 text-rose-300"
@@ -57,11 +114,11 @@ export default function DeleteGalleryPost() {
                             </p>
                           </li>
                         ))}
-                      </ul>
-                      <div className="rounded-b-2xl border-t-2 border-t-rose-400 text-center bg-pink-200/80 p-2.5">
+                      </ul> */}
+                      <div className="mt-8 rounded-b-2xl border-t-2 border-t-rose-400 text-center bg-pink-200/80 p-2.5">
                         <h4>Click a post to delete it</h4>
                       </div>
-                    </>
+                    </div>
                   )}
                   {imagePosts.length < 1 && (
                     <h3 className="pt-10 text-2xl text-pink-200">
