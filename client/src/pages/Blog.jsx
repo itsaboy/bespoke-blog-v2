@@ -4,23 +4,31 @@ import BlogText from "../components/Blog/BlogText";
 import BlogPosts from "../components/Blog/BlogPosts";
 import LoadingOverlay from "../components/LoadingOverlay";
 import { AppContext } from "../context/AppContext";
-import { useFetchBlogPage } from "../hooks/useFetchBlogPage";
+import { useFetchData } from "../hooks/useFetchData";
 
 export default function Blog() {
   const { currentPage, setCurrentPage } = useContext(AppContext);
 
-  const { loading, error, data, fetchBlogPage } = useFetchBlogPage();
+  const { loading, error, data, fetchData } = useFetchData();
 
   useEffect(() => {
     setCurrentPage("Blog");
-    fetchBlogPage();
+    fetchData("blogPage/posts");
   }, [currentPage]);
 
   return (
     <>
-      <BannerPic image={data.imageUrls} />
+      {data.length > 0 && (
+        <>
+          <BannerPic image={data[0].imageUrls} />
+        </>
+      )}
       <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-24 lg:px-8">
-        <BlogText title={data.title} body={data.body} />
+        {data.length > 0 && (
+          <>
+            <BlogText title={data[0].title} body={data[0].body} />
+          </>
+        )}
         <BlogPosts />
       </div>
       {loading && <LoadingOverlay />}

@@ -26,7 +26,7 @@ export const useNewBlogPost = () => {
       if (!response.ok) throw new Error("Upload failed");
 
       const result = await response.json();
-      setUploadMessage("Upload succeeded!");
+      setUploadMessage(result.message);
       setUploadStatus("success");
     } catch (error) {
       console.error("Error during upload:", error);

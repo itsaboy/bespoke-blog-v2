@@ -37,10 +37,9 @@ export const useUploadHomePage = () => {
         body: formData,
         credentials: "include",
       });
-      if (!response.ok) throw new Error("Upload failed");
-
+      if (!response.ok) setUploadMessage("Upload failed");
       const result = await response.json();
-      setUploadMessage("Upload succeeded!");
+      setUploadMessage(result.message);
       setUploadStatus("success");
     } catch (error) {
       console.error("Error during upload:", error);

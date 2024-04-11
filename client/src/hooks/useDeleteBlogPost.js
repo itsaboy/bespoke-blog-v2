@@ -19,7 +19,7 @@ export const useDeleteBlogPost = () => {
       if (!response.ok) throw new Error("Delete failed");
 
       const result = await response.json();
-      setDeleteMessage("Delete succeeded!");
+      setDeleteMessage(result.message);
       setDeleteStatus("success");
     } catch (error) {
       console.error("Error during upload:", error);

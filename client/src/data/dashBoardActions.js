@@ -11,20 +11,20 @@ import {
 
 export const actions = [
   {
-    title: "Create a Blog Post",
-    description:
-      "Unleash your creativity by drafting engaging content for your audience.",
-    path: "/dashboard/new-blog-post",
-    icon: PencilSquareIcon,
-    iconForeground: "text-green-400/80",
-    iconBackground: "bg-gray-800",
-  },
-  {
     title: "Create a Gallery Post",
     description:
       "Showcase your latest visuals in a post that captures eyes and hearts.",
     path: "/dashboard/new-gallery-post",
     icon: CameraIcon,
+    iconForeground: "text-green-400/80",
+    iconBackground: "bg-gray-800",
+  },
+  {
+    title: "Create a Blog Post",
+    description:
+      "Unleash your creativity by drafting engaging content for your audience.",
+    path: "/dashboard/new-blog-post",
+    icon: PencilSquareIcon,
     iconForeground: "text-green-400/80",
     iconBackground: "bg-gray-800",
   },

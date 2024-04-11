@@ -116,7 +116,7 @@ export default function NewBlogPost() {
                     >
                       Recommended aspect ratio is 9:16
                     </p>
-                    <div className="flex flex-col sm:flex-row justify-between">
+                    <div className="flex flex-col gap-4 justify-center items-center">
                       {!uploadLoading ? (
                         <SubmitButton text={"Upload"} />
                       ) : (

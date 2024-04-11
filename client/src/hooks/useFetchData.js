@@ -1,18 +1,19 @@
 import { useState, useCallback } from "react";
 
-export const useFetchHomePage = () => {
+export const useFetchData = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
 
-  const fetchHomePage = useCallback(async () => {
+  const fetchData = useCallback(async (endpoint) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/homePage/posts");
-      if (!response.ok) throw new Error("Fetch failed");
+      const request = endpoint;
+      const response = await fetch(`/api/${request}`);
+      if (!response.ok) setError("Fetch failed");
       const result = await response.json();
-      setData(result[0]);
+      setData(result);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -20,5 +21,5 @@ export const useFetchHomePage = () => {
     }
   }, []);
 
-  return { loading, error, data, fetchHomePage };
+  return { loading, error, data, fetchData };
 };

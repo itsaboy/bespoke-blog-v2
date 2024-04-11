@@ -41,7 +41,7 @@ export const createHomePagePost = async (c) => {
     });
 
     await homePage.save();
-    return c.json({ message: "Content created successfully", homePage });
+    return c.json({ message: "Upload successful" }, 201);
   } catch (error) {
     console.error("Error creating image post:", error);
     return c.json({ message: "Failed to create content" }, 500);

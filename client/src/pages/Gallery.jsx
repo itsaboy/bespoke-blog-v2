@@ -4,23 +4,27 @@ import GalleryText from "../components/Gallery/GalleryText";
 import GalleryPosts from "../components/Gallery/GalleryPosts";
 import LoadingOverlay from "../components/LoadingOverlay";
 import { AppContext } from "../context/AppContext";
-import { useFetchGalleryPage } from "../hooks/useFetchGalleryPage";
+import { useFetchData } from "../hooks/useFetchData";
 
 export default function Gallery() {
   const { currentPage, setCurrentPage } = useContext(AppContext);
 
-  const { loading, error, data, fetchGalleryPage } = useFetchGalleryPage();
+  const { loading, error, data, fetchData } = useFetchData();
 
   useEffect(() => {
     setCurrentPage("Gallery");
-    fetchGalleryPage();
+    fetchData("galleryPage/posts");
   }, [currentPage]);
 
   return (
     <>
-      <BannerPic image={data.imageUrls} />
+      {data.length > 0 && <BannerPic image={data[0].imageUrls} />}
       <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-24 lg:px-8">
-        <GalleryText title={data.title} body={data.body} />
+        {data.length > 0 && (
+          <>
+            <GalleryText title={data[0].title} body={data[0].body} />
+          </>
+        )}
         <GalleryPosts />
       </div>
       {loading && <LoadingOverlay />}

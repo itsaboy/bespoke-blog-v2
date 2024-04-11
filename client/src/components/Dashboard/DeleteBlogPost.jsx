@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
+import Feedback from "../Feedback";
 import { TrashIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useFetchBlogPosts } from "../../hooks/useFetchBlogPosts";
 import { useDeleteBlogPost } from "../../hooks/useDeleteBlogPost";
+import { AppContext } from "../../context/AppContext";
+import loadingIcon from "../../assets/icons/loadingIcon.svg";
 
 export default function DeleteBlogPost() {
-  const [blogPosts, setBlogPosts] = useState([]);
+  const { currentPage, setCurrentPage } = useContext(AppContext);
 
   const { loading, error, data, fetchBlogPosts } = useFetchBlogPosts();
 
@@ -19,8 +22,9 @@ export default function DeleteBlogPost() {
   } = useDeleteBlogPost();
 
   useEffect(() => {
+    setCurrentPage("Dashboard");
     fetchBlogPosts();
-  }, []);
+  }, [currentPage]);
 
   const handleDelete = async (postId, e) => {
     e.preventDefault();
@@ -84,15 +88,30 @@ export default function DeleteBlogPost() {
                           </div>
                         ))}
                       </div>
-                      <div className="mt-8 text-center">
-                        <h4 className="text-sky-400">
-                          Click a post to delete it
-                        </h4>
+                      <div className="flex flex-col gap-4 justify-center items-center">
+                        {!deleteLoading ? (
+                          <h4 className="mt-8 text-center text-sky-400">
+                            Click a post to delete it
+                          </h4>
+                        ) : (
+                          <img
+                            src={loadingIcon}
+                            className="h-6 w-6"
+                            aria-hidden
+                          />
+                        )}
+                        {deleteMessage && (
+                          <Feedback
+                            color={deleteStatus === "success" ? "green" : "red"}
+                            msg={deleteMessage}
+                            setMsg={setDeleteMessage}
+                          />
+                        )}
                       </div>
                     </>
                   )}
                   {data.length < 1 && (
-                    <h3 className="pt-10 text-2xl text-pink-200">
+                    <h3 className="pt-10 text-2xl text-center text-pink-200">
                       There are no saved blog posts!
                     </h3>
                   )}

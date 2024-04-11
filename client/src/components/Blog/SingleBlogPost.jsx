@@ -23,17 +23,17 @@ export default function SingleBlogPost() {
               <img
                 src={data.imageUrls}
                 alt=""
-                className="aspect-[9/16] rounded-xl bg-gray-900/5 object-cover shadow-neon shadow-rose-600/80 border-2 border-rose-400"
+                className="aspect-[9/16] rounded-xl bg-gray-900/5 object-cover shadow-neon shadow-sky-800/60"
               />
               <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
             </div>
           </div>
           <div>
-            <div className="text-base leading-7 text-gray-700 lg:max-w-lg">
-              <p className="p-2 text-base font-semibold leading-7 text-rose-400">
+            <div className="text-base leading-7 text-gray-200 lg:max-w-lg">
+              <p className="p-2 text-base font-semibold leading-7 text-gray-400">
                 {dayjs(data.createdAt).format("MMMM D, YYYY")}
               </p>
-              <h1 className="p-2 text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-l from-pink-300 to-pink-500 sm:text-4xl">
+              <h1 className="p-2 text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-l from-sky-300 to-sky-500 py-4 sm:text-4xl">
                 {data.title}
               </h1>
               <div className="p-2 max-w-xl">{data.body}</div>

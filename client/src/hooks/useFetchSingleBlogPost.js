@@ -13,7 +13,6 @@ export const useFetchSingleBlogPost = () => {
       if (!response.ok) throw new Error("Fetch failed");
       const result = await response.json();
       setData(result);
-      console.log(result);
     } catch (error) {
       setError(error.message);
     } finally {

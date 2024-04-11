@@ -26,13 +26,13 @@ export default function SingleGalleryPost() {
     <div className="bg-transparent py-20 mx-auto">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 py-6 lg:max-w-7xl lg:px-8">
         <div className="flex flex-col justify-center items-center mb-16">
-          <h2 className="text-2xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-l from-pink-300 to-pink-500 sm:text-4xl z-10 py-8">
+          <h2 className="text-2xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-l from-sky-300 to-sky-500 py-4 sm:text-4xl z-10">
             {data.title}
           </h2>
-          <h3 className="text-base sm:text-2xl leading-8 text-rose-300 sm:max-w-md lg:max-w-none">
+          <h3 className="text-base sm:text-2xl leading-8 text-gray-300 sm:max-w-md lg:max-w-none">
             {data.body}
           </h3>
-          <p className="mt-8 text-sm sm:text-xl leading-8 text-rose-300 sm:max-w-md lg:max-w-none">{dayjs(data.createdAt).format("MMMM D, YYYY")}</p>
+          <p className="py-4 text-sm sm:text-xl leading-8 text-gray-400 sm:max-w-md lg:max-w-none">{dayjs(data.createdAt).format("MMMM D, YYYY")}</p>
         </div>
         <div className="grid grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-16">
           {data.imageUrls &&
