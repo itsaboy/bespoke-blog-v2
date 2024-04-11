@@ -7,7 +7,7 @@ export default function BodyInput({
     <div className="col-span-full">
       <label
         htmlFor="body"
-        className="block text-sm font-medium leading-6 text-sky-400"
+        className="block text-sm font-medium leading-6 text-gray-400"
       >
         Body
       </label>

@@ -3,7 +3,7 @@ export default function TitleInput({ title, setTitle }) {
     <div className="col-span-full">
       <label
         htmlFor="title"
-        className="block text-sm font-medium leading-6 text-sky-400"
+        className="block text-sm font-medium leading-6 text-gray-400"
       >
         Title
       </label>

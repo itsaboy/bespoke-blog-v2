@@ -3,7 +3,7 @@ export default function LocationInput({ location, setLocation, toolTip }) {
     <div className="col-span-full">
       <label
         htmlFor="location"
-        className="block text-sm font-medium leading-6 text-sky-400"
+        className="block text-sm font-medium leading-6 text-gray-400"
       >
         Location
       </label>
