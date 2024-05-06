@@ -10,6 +10,7 @@ import { galleryPageRoutes } from "./routes/galleryPageRoutes.js";
 import { blogPageRoutes } from "./routes/blogPageRoutes.js";
 import { galleryPostRoutes } from "./routes/galleryPostRoutes.js";
 import { blogPostRoutes } from "./routes/blogPostRoutes.js";
+import { sendMessageRoutes } from "./routes/sendMessageRoutes.js";
 
 async function startServer() {
   try {
@@ -28,13 +29,13 @@ async function startServer() {
     app.route("/api/blogPage", blogPageRoutes);
     app.route("/api/galleryPost", galleryPostRoutes);
     app.route("/api/blogPost", blogPostRoutes);
+    app.route("/api/message", sendMessageRoutes);
 
     Bun.serve({
       fetch: app.fetch.bind(app),
       port: process.env.PORT,
     });
     console.log(`Hono server running on port ${process.env.PORT}`);
-
   } catch (error) {
     console.error("Failed to start the server:", error);
   }
